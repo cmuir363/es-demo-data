@@ -34,13 +34,13 @@ cd github-repo && npm i
 
 With the dependencies installed we are almost in a position to run the project and start to produce our dummy IOT data. But before we can do this we first need to create our Aiven Kafka service which we can send the data to. To do this go to the services tab of the Aiven console (https://console.aiven.io) and click on the “Create Service” button as shown below.
 
-![Untitled](../public/images/create-service.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/create-service.png)
 
 At this point you’ll be taken to the create service page which will let you define the service you want, the cloud service provider, and the region where the datacenter should be based. For this case we will choose Kafka and simply go with the default options given. To create the service, scroll to the bottom of the page and click the “Create Service” button. 
 
 Next we are taken to the overview page of the service we just created. On this page we can see the data we need to be able to connect our Kafka client to the service. Namely we can see the required **service url,** the **access key**, the **access certificate** and the **ca certificate**. 
 
-![Untitled](../public/images/kafka-connection-info.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/kafka-connection-info.png)
 
 We now need to download the access key, the access certificate and the ca certificate and store these in a sensible location. In this project we make use of environment variables and a .env file to store the service details. To create our .env file make a copy of the project example.env file 
 
@@ -52,7 +52,7 @@ and replace the variables in the newly created .env file with the details of you
 
 At this point we have everything we need to create a connection between our Kafka client and the Kafka service, however we haven’t yet defined any topics on the Kafka service that we can produce messages to. To define a Kafka topic go to the “Topics” section of your Kafka service in the Aiven console, click the “Add Topic” button and enter “iot-stream” as the topic name.
 
-![Untitled](../public/images/add-topics.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/add-topics.png)
 
 Finally, we are in a position where we can start producing our IOT dummy data to the Kafka topic. To start the project enter the following command in the terminal:
 
@@ -62,7 +62,7 @@ npm run dev
 
 After running this command we should then start to see a data stream appearing in the console which will look similar to below:
 
-![Untitled](../public/images/topic-output.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/topic-output.png)
 
 So let’s take a look at what exactly is happening. 
 
@@ -138,7 +138,7 @@ const consume = async () => {
 
 At this point you may be wondering if there is an alternative to creating a consumer to see the messages being sent to a topic. And yes, Aiven makes this possible directly in the console. To do this navigate to the “Topics” tab of your Kafka service and click on the `“iot-stream”` topic. This will bring up a window, where you can click on the “Messages” button. This will load up the messages page of the Topic, which gives you an option to fetch the latest messages. The messages that our client has sent have been base64 encoded, so to see the JSON object we sent in our message we must also enable the  “decode from Base64” option.
 
-![Untitled](../public/images/fetch-messages.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/fetch-messages.png)
 
 With that we can now view our Topic messages directly in the Aiven console, but this hardly constitutes a “Highly Observable” system. Yes we can see messages coming into the Aiven console and we can consume messages but the question is still, “How do we really know that our infrastructure is operating as it should be?” 
 
@@ -148,19 +148,19 @@ This is where we turn to InfluxDB and Grafana and the out-of-the-box integration
 
 Navigate back to our Kafka overview page and scroll down until we see a “Service Integrations” box. Within this box we want to click on the “Set-up integration button” as shown below.
 
-![Untitled](../public/images/set-up-integration.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/set-up-integration.png)
 
 This will open up the “Service Integrations” page where we want to look for the “Metrics” box and click on the “Use Integration” button.
 
-![Untitled](../public/images/metrics-integration.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/metrics-integration.png)
 
 Choose “New Service” from the menu, from the corresponding dropdown select the “New InfluxDB service” option and then click the “Continue” button. This will bring you to a page where you can define the Cloud Provider, the location and the service plan. Again just keep the defaults here and scroll to the bottom of the page and click “Create and Enable”. At this point you’ll be taken back to the integrations page and you should see your newly created InfluxDb integration as below. Click on this.
 
-![Untitled](../public/images/influxdb-integration.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/influxdb-integration.png)
 
 This will take you to the InfluxDB overview page where directly below the “Connections Information” you will see a “Manage Integrations” button. Click on this and then choose the “Grafana Metrics Dashboard” integration
 
-![Untitled](../public/images/grafana-influxdb-integration.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/grafana-influxdb-integration.png)
 
 From the pop-up window choose the “New service” option and choose continue to go to the set-up page. Again just keep the default options here and click the “Create and enable” button.
 
@@ -168,7 +168,7 @@ And that’s it. We now have a highly observable Kafka managed service. To see t
 
 Once logged-in, use the sidebar menu to go to Dashboards > Browse. We will then see a default dashboard which Aiven provides as part of its integration. Click on this and you’ll be taken to your Kafka dashboard where you can see in minute detail how each part of your Kafka cluster is performing.
 
-![Untitled](../public/images/grafana-dash.png)
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/grafana-dash.png)
 
 We can not only see System metrics but also Kafka specific metrics as well. As a challenge, try changing the millisecond parameter in the “produceIotDataStream” function down to 10 and then 1 and then check this dashboard to see how your Kafka cluster is handling this. For extra points try running multiple of these projects to simulate multiple IOT devices and see when your Kafka cluster is eventually overloaded. 
 
