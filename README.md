@@ -23,13 +23,13 @@ This is the problem that the “Observability” of a system describes. A highly
 For the purposes of this blog post we used Node.js to create a small project which will act as our producer, feeding dummy IOT data to our Aiven Kafka cluster. To get started, open a terminal and let’s clone this project into a new repo.
 
 ```json
-git clone github-repo
+git clone https://github.com/cmuir363/iot-aiven-kafka-blog.git
 ```
 
 Now let’s move into the newly cloned repo and install the required project dependencies using
 
 ```powershell
-cd github-repo && npm i
+cd iot-aiven-kafka-blog && npm i
 ```
 
 With the dependencies installed we are almost in a position to run the project and start to produce our dummy IOT data. But before we can do this we first need to create our Aiven Kafka service which we can send the data to. To do this go to the services tab of the Aiven console (https://console.aiven.io) and click on the “Create Service” button as shown below.
