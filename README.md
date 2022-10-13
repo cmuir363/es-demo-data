@@ -22,7 +22,7 @@ This is the problem that the “Observability” of a system describes. A highly
 
 For the purposes of this blog post we used Node.js to create a small project which will act as our producer, feeding dummy IOT data to our Aiven Kafka cluster. To get started, open a terminal and let’s clone this project into a new repo.
 
-```json
+```powershell
 git clone https://github.com/cmuir363/iot-aiven-kafka-blog.git
 ```
 
@@ -44,7 +44,7 @@ Next we are taken to the overview page of the service we just created. On this p
 
 We now need to download the access key, the access certificate and the ca certificate and store these in a sensible location. In this project we make use of environment variables and a .env file to store the service details. To create our .env file make a copy of the project example.env file 
 
-```json
+```powershell
 cp example.env .env
 ```
 
@@ -56,7 +56,7 @@ At this point we have everything we need to create a connection between our Kafk
 
 Finally, we are in a position where we can start producing our IOT dummy data to the Kafka topic. To start the project enter the following command in the terminal:
 
-```json
+```powershell
 npm run dev
 ```
 
