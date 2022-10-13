@@ -152,7 +152,7 @@ Navigate back to our Kafka overview page and scroll down until we see a “Servi
 
 This will open up the “Service Integrations” page where we want to look for the “Metrics” box and click on the “Use Integration” button.
 
-![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/metrics-integration.png){ width=60% }
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/metrics-integration.png){ height="100" }
 
 Choose “New Service” from the menu, from the corresponding dropdown select the “New InfluxDB service” option and then click the “Continue” button. This will bring you to a page where you can define the Cloud Provider, the location and the service plan. Again just keep the defaults here and scroll to the bottom of the page and click “Create and Enable”. At this point you’ll be taken back to the integrations page and you should see your newly created InfluxDb integration as below. Click on this.
 
@@ -160,7 +160,7 @@ Choose “New Service” from the menu, from the corresponding dropdown select t
 
 This will take you to the InfluxDB overview page where directly below the “Connections Information” you will see a “Manage Integrations” button. Click on this and then choose the “Grafana Metrics Dashboard” integration
 
-![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/grafana-influxdb-integration.png){ width=60%}
+![Untitled](https://github.com/cmuir363/iot-aiven-kafka-blog/blob/main/public/images/grafana-influxdb-integration.png){ height="100"}
 
 From the pop-up window choose the “New service” option and choose continue to go to the set-up page. Again just keep the default options here and click the “Create and enable” button.
 
