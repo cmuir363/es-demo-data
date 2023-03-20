@@ -1,7 +1,8 @@
 export interface IotData {
-    timestamp: string;
-    rpm: string;
-    temperature: string;
+    timestamp: number;
+    voltage: number;
+    temperature: number;
+    node: "a" | "b" | "c";
 }
 
 /**
@@ -15,20 +16,31 @@ export const produceIotDataStream = (timeIntervals: number, callback: (data) => 
         setInterval(() => {
 
             const iotData: IotData = {
-                timestamp: new Date().toISOString(),
-                rpm: getRpm(1200, 1500).toString(),
-                temperature: getTemperature(80, 100)
+                timestamp: new Date().getTime(),
+                voltage: getVoltage(3, 10),
+                temperature: getTemperature(80, 100),
+                node: getNode()
             }
-
             callback(iotData)
         }, timeIntervals)
 }
 
-function getRpm(min, max) {
+function getVoltage(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
 }
 
 function getTemperature(min, max) {
     const num: number = Math.floor(Math.random() * (max - min) ) + min + Math.random()
-    return num.toFixed(1);
+    return num;
+}
+
+function getNode() {
+    const nonce = Math.random();
+    if (nonce < 0.3333) {
+        return "a"
+    } else if (nonce >= 0.3333 && nonce <= 0.6666) {
+        return "b"
+    } else {
+        return "c"
+    }
 }

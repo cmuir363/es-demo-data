@@ -1,43 +1,46 @@
-import { Kafka, logLevel } from "kafkajs"
-import { v4 as uuid } from 'uuid';
-import fs from "fs"
 import * as dotenv from 'dotenv'
+import { Client } from '@elastic/elasticsearch'
 
-import consume from "./consume"
 import { produceIotDataStream } from "./iot-data"
+import { produceHourlyIndexName } from './es-helpers'
 
 dotenv.config()
 
-const kafka = new Kafka({
-    clientId: "my-app",
-    brokers: [process.env.KAFKA_CLUSTER_URL],
-    ssl: {
-        ca: [fs.readFileSync(process.env.KAFKA_CA_PATH, "utf-8")],
-        key: fs.readFileSync(process.env.KAFKA_KEY_PATH, "utf-8"),
-        cert: fs.readFileSync(process.env.KAFKA_CERT_PATH, "utf-8")
-    },
-    logLevel: logLevel.ERROR,
+const esPassword = process.env.ES_PASSWORD
+
+//connect to es
+
+const client = new Client({
+    node: "http://34.159.189.197:9200",
+    auth: {
+        username: "elastic",
+        password: esPassword
+    }
 })
 
-const producer = kafka.producer()
+//change iot data to match the es example
 
 const produce = async () => {
-    await producer.connect()
-
     produceIotDataStream(100, (data) => {
-        producer.send({
-            topic: "iot-stream",
-            messages: [
-                {
-                    key: uuid(),
-                    value: JSON.stringify(data)
-                }
-            ]
+        client.index({
+            index: produceHourlyIndexName("machine-sensor"),
+            document: { ...data }
         })
+        .then(result => console.log(result))
         .catch(err => console.log(err))
     })
 }
 
-consume()
+const fetch = async () => {
+    const result = await client.search({
+        index: "machine-sensor-rollup",//produceHourlyIndexName("machine-sensor"),
+        query: {
+            match_all: {}
+        }
+    })
+    console.log(result.hits.hits)
+
+}
+//fetch()
 produce() 
 
